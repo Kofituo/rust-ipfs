@@ -1073,7 +1073,10 @@ impl<C: NetworkBehaviour<ToSwarm = void::Void> + Send> UninitializedIpfs<C> {
                     let (tx, _rx) = oneshot_channel();
                     fut.pending_add_listener.insert(id, tx);
                 }
-                _ => continue,
+                e => {
+                    tracing::error!("e {:?}", e);
+                    continue
+                }
             };
         }
 
